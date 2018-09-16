@@ -1,29 +1,27 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { map } from 'ramda'
+import { map, addIndex } from 'ramda'
+import Guest from './Guest'
 
 const GuestList = props => (
-  <div>
-    <ul>
-      {map(
-        (guest, index) => (
-          <li key={index}>
-            <span>{guest.name}</span>
-            <label>
-              <input type="checkbox" checked={guest.isConfirmed} /> Confirmed
-            </label>
-            <button>edit</button>
-            <button>remove</button>
-          </li>
-        ),
-        props.guests
-      )}
-    </ul>
-  </div>
+  <ul>
+    {addIndex(map)(
+      (guest, index) => (
+        <Guest
+          key={index}
+          name={guest.name}
+          isConfirmed={guest.isConfirmed}
+          handleConfirmation={() => props.toggleConfirmationAt(index)}
+        />
+      ),
+      props.guests
+    )}
+  </ul>
 )
 
-GuestList.PropTypes = {
-  guests: PropTypes.array.isRequired
+GuestList.propTypes = {
+  guests: PropTypes.array.isRequired,
+  toggleConfirmationAt: PropTypes.func.isRequired
 }
 
 export default GuestList

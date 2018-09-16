@@ -1,6 +1,19 @@
 import React, { Component } from 'react'
 import './App.css'
 import GuestList from './GuestList'
+// import {map, merge} from 'ramda'
+
+/*
+
+const guestIndex = indexToChange => (guest, index) =>
+  index === indexToChange
+    ? {
+        ...guest,
+        isConfirmed: !guest.isConfirmed
+      } // merge(guest, { isConfirmed: !guest.isConfirmed })
+    : guest
+
+*/
 
 class App extends Component {
   state = {
@@ -20,6 +33,21 @@ class App extends Component {
     ]
   }
 
+  // try with merge(guest, { isConfirmed: !guest.isConfirmed })
+
+  toggleConfirmationAt = indexToChange =>
+    this.setState({
+      guests: this.state.guests.map((guest, index) => {
+        if (index === indexToChange) {
+          return {
+            ...guest,
+            isConfirmed: !guest.isConfirmed
+          }
+        }
+        return guest
+      })
+    })
+
   getTotalInvited = () => this.state.guests.length
   // getAttendingGuests = () =>
   // getUnconformedGuests = () =>
@@ -29,10 +57,18 @@ class App extends Component {
       <div className="App">
         <header>
           <h1>RSVP</h1>
-          <p>A Treehouse App</p>
+          <p>Brian Liotti's Example App</p>
           <form>
-            <input type="text" value="Safia" placeholder="Invite Someone" />
-            <button type="submit" name="submit" value="submit">
+            <input
+              type="text"
+              // value="Safia"
+              placeholder="Invite Someone"
+            />
+            <button
+              type="submit"
+              name="submit"
+              // value="submit"
+            >
               Submit
             </button>
           </form>
@@ -60,7 +96,10 @@ class App extends Component {
               </tr>
             </tbody>
           </table>
-          <GuestList guests={this.state.guests} />
+          <GuestList
+            guests={this.state.guests}
+            toggleConfirmationAt={this.toggleConfirmationAt}
+          />
         </div>
       </div>
     )
