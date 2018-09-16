@@ -1,19 +1,7 @@
 import React, { Component } from 'react'
 import './App.css'
 import GuestList from './GuestList'
-// import {map, merge} from 'ramda'
-
-/*
-
-const guestIndex = indexToChange => (guest, index) =>
-  index === indexToChange
-    ? {
-        ...guest,
-        isConfirmed: !guest.isConfirmed
-      } // merge(guest, { isConfirmed: !guest.isConfirmed })
-    : guest
-
-*/
+import { map, merge, addIndex, curry } from 'ramda'
 
 class App extends Component {
   state = {
@@ -33,19 +21,15 @@ class App extends Component {
     ]
   }
 
-  // try with merge(guest, { isConfirmed: !guest.isConfirmed })
-
   toggleConfirmationAt = indexToChange =>
     this.setState({
-      guests: this.state.guests.map((guest, index) => {
-        if (index === indexToChange) {
-          return {
-            ...guest,
-            isConfirmed: !guest.isConfirmed
-          }
-        }
-        return guest
-      })
+      guests: addIndex(map)(
+        (guest, index) =>
+          index === indexToChange
+            ? merge(guest, { isConfirmed: !guest.isConfirmed }) // OR {...guest, isConfirmed: !guest.isConfirmed }
+            : guest,
+        this.state.guests
+      )
     })
 
   getTotalInvited = () => this.state.guests.length
