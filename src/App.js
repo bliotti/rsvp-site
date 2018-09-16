@@ -1,36 +1,44 @@
 import React, { Component } from 'react'
 import './App.css'
 import GuestList from './GuestList'
-import { map, merge, addIndex, curry } from 'ramda'
+import { map, merge, addIndex } from 'ramda'
 
 class App extends Component {
   state = {
     guests: [
       {
         name: 'Treasure',
-        isConfirmed: false
+        isConfirmed: false,
+        isEditing: false
       },
       {
         name: 'Nick',
-        isConfirmed: true
+        isConfirmed: true,
+        isEditing: false
       },
       {
         name: 'Brian',
-        isConfirmed: true
+        isConfirmed: true,
+        isEditing: true
       }
     ]
   }
 
-  toggleConfirmationAt = indexToChange =>
+  toggleGuestPropertyAt = (property, indexToChange) =>
     this.setState({
       guests: addIndex(map)(
         (guest, index) =>
           index === indexToChange
-            ? merge(guest, { isConfirmed: !guest.isConfirmed }) // OR {...guest, isConfirmed: !guest.isConfirmed }
+            ? merge(guest, { [property]: !guest[property] }) // OR {...guest, isConfirmed: !guest.isConfirmed }
             : guest,
         this.state.guests
       )
     })
+
+  toggleConfirmationAt = index =>
+    this.toggleGuestPropertyAt('isConfirmed', index)
+
+  toggleEditingAt = index => this.toggleGuestPropertyAt('isEditing', index)
 
   getTotalInvited = () => this.state.guests.length
   // getAttendingGuests = () =>
@@ -83,6 +91,7 @@ class App extends Component {
           <GuestList
             guests={this.state.guests}
             toggleConfirmationAt={this.toggleConfirmationAt}
+            toggleEditingAt={this.toggleEditingAt}
           />
         </div>
       </div>
