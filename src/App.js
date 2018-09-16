@@ -5,6 +5,7 @@ import { map, merge, addIndex } from 'ramda'
 
 class App extends Component {
   state = {
+    isFiltered: false,
     guests: [
       {
         name: 'Treasure',
@@ -49,6 +50,11 @@ class App extends Component {
       )
     })
 
+  toggleFilter = () =>
+    this.setState({
+      isFiltered: !this.state.isFiltered
+    })
+
   getTotalInvited = () => this.state.guests.length
   // getAttendingGuests = () =>
   // getUnconformedGuests = () =>
@@ -77,8 +83,14 @@ class App extends Component {
         <div className="main">
           <div>
             <h2>Invitees</h2>
+
             <label>
-              <input type="checkbox" /> Hide those who haven't responded
+              <input
+                type="checkbox"
+                onChange={this.toggleFilter}
+                checked={this.state.isFiltered}
+              />
+              Hide those who haven't responded
             </label>
           </div>
           <table className="counter">
@@ -102,6 +114,7 @@ class App extends Component {
             toggleConfirmationAt={this.toggleConfirmationAt}
             toggleEditingAt={this.toggleEditingAt}
             setNameAt={this.setNameAt}
+            isFiltered={this.state.isFiltered}
           />
         </div>
       </div>
