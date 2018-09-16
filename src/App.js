@@ -6,6 +6,7 @@ import { map, merge, addIndex } from 'ramda'
 class App extends Component {
   state = {
     isFiltered: false,
+    pendingGuest: '',
     guests: [
       {
         name: 'Treasure',
@@ -55,6 +56,26 @@ class App extends Component {
       isFiltered: !this.state.isFiltered
     })
 
+  handleNameInput = e =>
+    this.setState({
+      pendingGuest: e.target.value
+    })
+
+  newGuestSubmitHandler = e => {
+    e.preventDefault()
+    this.setState({
+      guests: [
+        {
+          name: this.state.pendingGuest,
+          isConfirmed: false,
+          isEditing: false
+        },
+        ...this.state.guests
+      ],
+      pendingGuest: ''
+    })
+  }
+
   getTotalInvited = () => this.state.guests.length
   // getAttendingGuests = () =>
   // getUnconformedGuests = () =>
@@ -65,16 +86,18 @@ class App extends Component {
         <header>
           <h1>RSVP</h1>
           <p>Brian Liotti's Example App</p>
-          <form>
+          <form onSubmit={this.newGuestSubmitHandler}>
             <input
               type="text"
-              // value="Safia"
+              value={this.state.pendingGuest}
+              onChange={this.handleNameInput}
               placeholder="Invite Someone"
             />
             <button
               type="submit"
               name="submit"
-              // value="submit"
+              value={this.state.pendingGuest}
+              onClick={this.newGuestSubmitHandler}
             >
               Submit
             </button>
@@ -83,7 +106,6 @@ class App extends Component {
         <div className="main">
           <div>
             <h2>Invitees</h2>
-
             <label>
               <input
                 type="checkbox"
