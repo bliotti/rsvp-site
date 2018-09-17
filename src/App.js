@@ -10,7 +10,7 @@ class App extends Component {
     pendingGuest: '',
     guests: [
       {
-        name: 'Treasure',
+        name: 'Charlie',
         isConfirmed: false,
         isEditing: false
       },
@@ -22,7 +22,7 @@ class App extends Component {
       {
         name: 'Brian',
         isConfirmed: true,
-        isEditing: true
+        isEditing: false
       }
     ]
   }
@@ -86,16 +86,22 @@ class App extends Component {
   }
 
   getTotalInvited = () => this.state.guests.length
-  // getAttendingGuests = () =>
-  // getUnconformedGuests = () =>
+
+  getAttendingGuests = () =>
+    this.state.guests.reduce(
+      (total, guest) => (guest.isConfirmed ? total + 1 : total),
+      0
+    )
 
   render() {
     const totalInvited = this.getTotalInvited()
+    const numberAttending = this.getAttendingGuests()
+    const numberUnconfirmed = totalInvited - numberAttending
     return (
       <div className="App">
         <header>
           <h1>RSVP</h1>
-          <p>Brian Liotti's Example App</p>
+          <p>Simple RSVP App Built with React.js</p>
 
           <form onSubmit={this.newGuestSubmitHandler}>
             <input
@@ -129,7 +135,11 @@ class App extends Component {
             </label>
           </div>
 
-          <Counter totalInvited={totalInvited} />
+          <Counter
+            totalInvited={totalInvited}
+            numberAttending={numberAttending}
+            numberUnconfirmed={numberUnconfirmed}
+          />
 
           <GuestList
             guests={this.state.guests}
