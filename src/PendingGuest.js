@@ -1,15 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const PendingGuest = ({ name }) =>
-  name ? (
+const PendingGuest = props =>
+  props.name ? (
     <li className="pending">
-      <span>{name}</span>
+      <span>{props.name}</span>
     </li>
   ) : null
 
 PendingGuest.propTypes = {
-  name: PropTypes.string.isRequired
+  name: PropTypes.string
 }
 
 export default PendingGuest
