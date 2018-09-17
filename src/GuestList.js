@@ -2,9 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { map, addIndex, filter, compose } from 'ramda'
 import Guest from './Guest'
+import PendingGuest from './PendingGuest'
 
 const GuestList = props => (
   <ul>
+    <PendingGuest name={props.pendingGuest} />
     {compose(
       addIndex(map)((guest, index) => (
         <Guest
@@ -29,7 +31,8 @@ GuestList.propTypes = {
   toggleEditingAt: PropTypes.func.isRequired,
   setNameAt: PropTypes.func.isRequired,
   isFiltered: PropTypes.bool.isRequired,
-  removeGuestAt: PropTypes.func.isRequired
+  removeGuestAt: PropTypes.func.isRequired,
+  PendingGuest: PropTypes.string.isRequired
 }
 
 export default GuestList
