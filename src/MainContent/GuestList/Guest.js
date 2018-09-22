@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import GuestName from '../GuestName'
+import GuestName from './GuestName'
 
 const Guest = props => {
   const {

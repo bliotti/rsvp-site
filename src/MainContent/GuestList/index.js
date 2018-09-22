@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { map, addIndex, filter, compose } from 'ramda'
 import Guest from './Guest'
-import PendingGuest from '../PendingGuest'
+import PendingGuest from './PendingGuest'
 
 const GuestList = props => (
   <ul>

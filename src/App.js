@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
-
 import { map, merge, addIndex } from 'ramda'
-
 import Header from './Header'
 import MainContent from './MainContent'
 
@@ -107,7 +105,7 @@ class App extends Component {
           handleNameInput={this.handleNameInput}
         />
         <MainContent
-          onChange={this.toggleFilter}
+          toggleFilter={this.toggleFilter}
           checked={this.state.isFiltered}
           totalInvited={totalInvited}
           numberAttending={numberAttending}
