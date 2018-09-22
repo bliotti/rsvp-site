@@ -3,6 +3,7 @@ import './App.css'
 import { map, merge, addIndex } from 'ramda'
 import Header from './Header'
 import MainContent from './MainContent'
+import SimpleStorage from 'react-simple-storage'
 
 class App extends Component {
   state = {
@@ -99,6 +100,8 @@ class App extends Component {
     const numberUnconfirmed = totalInvited - numberAttending
     return (
       <div className="App">
+        <SimpleStorage parent={this} />
+
         <Header
           newGuestSubmitHandler={this.newGuestSubmitHandler}
           pendingGuest={this.state.pendingGuest}
