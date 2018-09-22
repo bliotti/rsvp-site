@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import './App.css'
-import GuestList from './GuestList'
+
 import { map, merge, addIndex } from 'ramda'
-import Counter from './Counter'
+
+import Header from './Header'
+import MainContent from './MainContent'
 
 class App extends Component {
   state = {
@@ -99,58 +101,25 @@ class App extends Component {
     const numberUnconfirmed = totalInvited - numberAttending
     return (
       <div className="App">
-        <header>
-          <h1>RSVP</h1>
-          <p>Simple RSVP App Built with React.js</p>
-
-          <form onSubmit={this.newGuestSubmitHandler}>
-            <input
-              type="text"
-              value={this.state.pendingGuest}
-              onChange={this.handleNameInput}
-              placeholder="Invite Someone"
-            />
-
-            <button
-              type="submit"
-              name="submit"
-              value={this.state.pendingGuest}
-              onClick={this.newGuestSubmitHandler}
-            >
-              Submit
-            </button>
-          </form>
-        </header>
-
-        <div className="main">
-          <div>
-            <h2>Invitees</h2>
-            <label>
-              <input
-                type="checkbox"
-                onChange={this.toggleFilter}
-                checked={this.state.isFiltered}
-              />
-              Hide those who haven't responded
-            </label>
-          </div>
-
-          <Counter
-            totalInvited={totalInvited}
-            numberAttending={numberAttending}
-            numberUnconfirmed={numberUnconfirmed}
-          />
-
-          <GuestList
-            guests={this.state.guests}
-            toggleConfirmationAt={this.toggleConfirmationAt}
-            toggleEditingAt={this.toggleEditingAt}
-            setNameAt={this.setNameAt}
-            isFiltered={this.state.isFiltered}
-            removeGuestAt={this.removeGuestAt}
-            pendingGuest={this.state.pendingGuest}
-          />
-        </div>
+        <Header
+          newGuestSubmitHandler={this.newGuestSubmitHandler}
+          pendingGuest={this.state.pendingGuest}
+          handleNameInput={this.handleNameInput}
+        />
+        <MainContent
+          onChange={this.toggleFilter}
+          checked={this.state.isFiltered}
+          totalInvited={totalInvited}
+          numberAttending={numberAttending}
+          numberUnconfirmed={numberUnconfirmed}
+          guests={this.state.guests}
+          toggleConfirmationAt={this.toggleConfirmationAt}
+          toggleEditingAt={this.toggleEditingAt}
+          setNameAt={this.setNameAt}
+          isFiltered={this.state.isFiltered}
+          removeGuestAt={this.removeGuestAt}
+          pendingGuest={this.state.pendingGuest}
+        />
       </div>
     )
   }
